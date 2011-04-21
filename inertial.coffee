@@ -15,5 +15,6 @@ onMotion = (e) ->
     window.alert 'Got motion...'
     print motionTemplate e.accelerationIncludingGravity
 
-$().bind('devicemotion', onMotion)
+#$().bind('devicemotion', onMotion)
+window.addEventListener 'devicemotion', onMotion
 window.alert 'Starting'
