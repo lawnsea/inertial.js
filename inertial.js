@@ -47,10 +47,9 @@
     x += v.x * dt;
     y += v.y * dt;
     z += v.z * dt;
-    if (h != null) {
-      clearTimeout(h);
+    if (!(h != null)) {
+      return h = setTimeout(reportTimeout, 500);
     }
-    return h = setTimeout(reportTimeout, 500);
   };
   window.addEventListener('devicemotion', onMotion, false);
 }).call(this);

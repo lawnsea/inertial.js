@@ -49,8 +49,7 @@ onMotion = (e) ->
     y += v.y * dt
     z += v.z * dt
 
-    if h?
-        clearTimeout h
-    h = setTimeout reportTimeout, 500
+    if not h?
+        h = setTimeout reportTimeout, 500
 
 window.addEventListener 'devicemotion', onMotion, false
