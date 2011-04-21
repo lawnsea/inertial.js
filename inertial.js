@@ -18,6 +18,6 @@
     window.alert('Got motion...');
     return print(motionTemplate(e.accelerationIncludingGravity));
   };
-  $().bind('devicemotion', onMotion);
+  window.addEventListener('devicemotion', onMotion, false);
   window.alert('Starting');
 }).call(this);
