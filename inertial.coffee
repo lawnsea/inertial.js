@@ -51,8 +51,10 @@ onMotion = (e) ->
     ay = a.y / 1000
     az = a.z / 1000
 
+    ###
     if Math.abs(ax) < A_THRESH and Math.abs(ay) < A_THRESH
         return
+    ###
 
     v.x += ax * dt
     v.y += ay * dt

@@ -50,9 +50,10 @@
     ax = a.x / 1000;
     ay = a.y / 1000;
     az = a.z / 1000;
-    if (Math.abs(ax) < A_THRESH && Math.abs(ay) < A_THRESH) {
-      return;
-    }
+    /*
+        if Math.abs(ax) < A_THRESH and Math.abs(ay) < A_THRESH
+            return
+        */
     v.x += ax * dt;
     v.y += ay * dt;
     v.z += az * dt;
