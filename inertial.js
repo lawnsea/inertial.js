@@ -1,5 +1,5 @@
 (function() {
-  var INCHES_PER_METER, MOTION_REPORT_INTERVAL, axEl, ayEl, azEl, body, h, log, motions, onMotion, positionTemplate, print, printTemplate, r, report, reportTimeout, tLastMotionEvent, v, vxEl, vyEl, vzEl, x, xEl, y, yEl, z, zEl;
+  var A_THRESH, INCHES_PER_METER, axEl, ayEl, azEl, body, h, log, onMotion, positionTemplate, print, printTemplate, r, report, reportTimeout, tLastMotionEvent, v, vxEl, vyEl, vzEl, x, xEl, y, yEl, z, zEl;
   x = 0;
   y = 0;
   z = 0;
@@ -10,8 +10,7 @@
     z: 0
   };
   h = null;
-  motions = 0;
-  MOTION_REPORT_INTERVAL = 10;
+  A_THRESH = 1;
   INCHES_PER_METER = 39.3700787;
   tLastMotionEvent = null;
   body = $('body');
@@ -47,6 +46,9 @@
   onMotion = function(e) {
     var a, dt;
     a = e.acceleration;
+    if (a.x < A_THRESH && a.y < A_THRESH) {
+      return;
+    }
     dt = e.interval;
     v.x += (a.x * dt) / 1000;
     v.y += (a.y * dt) / 1000;

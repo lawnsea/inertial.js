@@ -9,9 +9,7 @@ v =
 
 h = null
 
-motions = 0
-MOTION_REPORT_INTERVAL = 10
-
+A_THRESH = 1
 INCHES_PER_METER = 39.3700787
 
 tLastMotionEvent = null
@@ -44,6 +42,8 @@ yEl = $('#y')
 zEl = $('#z')
 onMotion = (e) ->
     a = e.acceleration
+    if a.x < A_THRESH and a.y < A_THRESH
+        return
 
     dt = e.interval
 
