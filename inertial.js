@@ -1,5 +1,5 @@
 (function() {
-  var A_THRESH, INCHES_PER_MM, axEl, ayEl, azEl, body, h, log, onMotion, positionTemplate, print, printTemplate, r, report, reportTimeout, tLastMotionEvent, v, vxEl, vyEl, vzEl, x, xEl, y, yEl, z, zEl;
+  var A_THRESH, INCHES_PER_MM, axEl, ayEl, azEl, body, h, log, onMotion, positionTemplate, print, printTemplate, r, report, reportTimeout, t, tLastMotionEvent, v, vxEl, vyEl, vzEl, x, xEl, y, yEl, z, zEl;
   x = 0;
   y = 0;
   z = 0;
@@ -9,6 +9,7 @@
     y: 0,
     z: 0
   };
+  t = null;
   h = null;
   A_THRESH = 1 / 1000;
   INCHES_PER_MM = 39.3700787 / 1000;
@@ -44,7 +45,12 @@
   yEl = $('#y');
   zEl = $('#z');
   onMotion = function(e) {
-    var a, ax, ay, az, dt;
+    var a, ax, ay, az, dt, t2;
+    if (t != null) {
+      t2 = Date.now();
+    } else {
+      t = t2 = Date.now();
+    }
     a = e.acceleration;
     dt = e.interval;
     ax = a.x / 1000;
@@ -60,15 +66,16 @@
     x += v.x * dt;
     y += v.y * dt;
     z += v.z * dt;
-    axEl.html(ax);
-    ayEl.html(ay);
-    azEl.html(az);
-    vxEl.html(v.x);
-    vyEl.html(v.y);
-    vzEl.html(v.z);
+    axEl.html(ax.toFixed(5));
+    ayEl.html(ay.toFixed(5));
+    azEl.html(az.toFixed(5));
+    vxEl.html(v.x.toFixed(5));
+    vyEl.html(v.y.toFixed(5));
+    vzEl.html(dt);
     xEl.html(x.toFixed(3));
     yEl.html(y.toFixed(3));
-    return zEl.html(z.toFixed(3));
+    zEl.html(t2 - t);
+    return t = t2;
   };
   window.addEventListener('devicemotion', onMotion, false);
 }).call(this);

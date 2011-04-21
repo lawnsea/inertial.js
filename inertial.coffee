@@ -6,6 +6,7 @@ v =
     x: 0
     y: 0
     z: 0
+t = null
 
 h = null
 
@@ -43,6 +44,11 @@ xEl = $('#x')
 yEl = $('#y')
 zEl = $('#z')
 onMotion = (e) ->
+    if t?
+        t2 = Date.now()
+    else
+        t = t2 = Date.now()
+
     a = e.acceleration
     dt = e.interval
 
@@ -64,14 +70,15 @@ onMotion = (e) ->
     y += v.y * dt
     z += v.z * dt
 
-    axEl.html(ax)
-    ayEl.html(ay)
-    azEl.html(az)
-    vxEl.html(v.x)
-    vyEl.html(v.y)
-    vzEl.html(v.z)
+    axEl.html(ax.toFixed(5))
+    ayEl.html(ay.toFixed(5))
+    azEl.html(az.toFixed(5))
+    vxEl.html(v.x.toFixed(5))
+    vyEl.html(v.y.toFixed(5))
+    vzEl.html(dt) #v.z)
     xEl.html(x.toFixed(3))
     yEl.html(y.toFixed(3))
-    zEl.html(z.toFixed(3))
+    zEl.html(t2 - t)#z.toFixed(3))
+    t = t2
 
 window.addEventListener 'devicemotion', onMotion, false
