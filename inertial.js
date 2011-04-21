@@ -36,15 +36,11 @@
   positionTemplate = _.template('x: <%= x %>, y: <%= y %>, z: <%= z %>');
   onMotion = function(e) {
     var a, dt, ti;
-    if (motions % MOTION_REPORT_INTERVAL === 0) {
-      report();
-    }
-    motions += 1;
-    motions %= MOTION_REPORT_INTERVAL;
+    a = e.acceleration;
     dt = Date.now() - t;
     t += dt;
-    ti = e.interval;
-    a = e.acceleration;
+    dt /= 1000;
+    ti = e.interval / 1000;
     v.x += a.x * ti;
     v.y += a.y * ti;
     v.z += a.z * ti;
