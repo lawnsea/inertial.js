@@ -23,9 +23,9 @@ print = (s) ->
     body.append printTemplate s: s
 
 report = -> print positionTemplate
-        x: x * INCHES_PER_METER
-        y: y * INCHES_PER_METER
-        z: z * INCHES_PER_METER
+        x: (x * INCHES_PER_METER).toFixed(2)
+        y: (y * INCHES_PER_METER).toFixed(2)
+        z: (z * INCHES_PER_METER).toFixed(2)
 
 reportTimeout = ->
     print 'Timed out waiting for motion'
@@ -51,6 +51,6 @@ onMotion = (e) ->
 
     if h?
         clearTimeout h
-    h = setTimeout reportTimeout, 10
+    h = setTimeout reportTimeout, 500
 
 window.addEventListener 'devicemotion', onMotion, false
