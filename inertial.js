@@ -1,7 +1,8 @@
 (function() {
-  var INCHES_PER_METER, MOTION_REPORT_INTERVAL, body, h, motions, onMotion, positionTemplate, print, printTemplate, r, report, t, tLastMotionEvent, v, x, y;
+  var INCHES_PER_METER, MOTION_REPORT_INTERVAL, body, h, motions, onMotion, positionTemplate, print, printTemplate, r, report, t, tLastMotionEvent, v, x, y, z;
   x = 0;
   y = 0;
+  z = 0;
   r = 0;
   v = {
     x: 0,
