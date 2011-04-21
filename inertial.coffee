@@ -18,7 +18,7 @@ INCHES_PER_METER = 39.3700787
 tLastMotionEvent = null
 
 body = $('body')
-printTemplate = _.template '<span><%= s %></span>'
+printTemplate = _.template '<div><span><%= s %></span></div>'
 print = (s) ->
     body.append printTemplate s: s
 
@@ -27,10 +27,14 @@ report = -> print positionTemplate
         y: y * INCHES_PER_METER
         z: z * INCHES_PER_METER
 
+reportTimeout = ->
+    print 'Timed out waiting for motion'
+    report()
+
 positionTemplate = _.template 'x: <%= x %>, y: <%= y %>, z: <%= z %>'
 onMotion = (e) ->
     if motions % MOTION_REPORT_INTERVAL is 0
-        report e.acceleration
+        report()
     motions += 1
     motions %= MOTION_REPORT_INTERVAL
 
@@ -50,6 +54,6 @@ onMotion = (e) ->
 
     if h?
         clearTimeout h
-    h = setTimeout report, 100
+    h = setTimeout reportTimeout, 10
 
 window.addEventListener 'devicemotion', onMotion, false
