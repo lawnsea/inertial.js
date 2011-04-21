@@ -62,9 +62,9 @@ onMotion = (e) ->
     y += v.y * dt
     z += v.z * dt
 
-    aEl.html(ax)
-    aEl.html(ay)
-    aEl.html(az)
+    axEl.html(ax)
+    ayEl.html(ay)
+    azEl.html(az)
     vxEl.html(v.x)
     vyEl.html(v.y)
     vzEl.html(v.z)
