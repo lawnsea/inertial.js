@@ -31,7 +31,8 @@
   };
   reportTimeout = function() {
     print('Timed out waiting for motion');
-    return report();
+    report();
+    return h = null;
   };
   positionTemplate = _.template('x: <%= x %>, y: <%= y %>, z: <%= z %>');
   onMotion = function(e) {

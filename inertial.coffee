@@ -30,6 +30,7 @@ report = -> print positionTemplate
 reportTimeout = ->
     print 'Timed out waiting for motion'
     report()
+    h = null
 
 positionTemplate = _.template 'x: <%= x %>, y: <%= y %>, z: <%= z %>'
 onMotion = (e) ->
