@@ -12,6 +12,8 @@ print = (s) ->
 
 motionTemplate = _.template 'agx: <%= x %>, agy: <%= y %>, agz: <%= z %>'
 onMotion = (e) ->
+    window.alert 'Got motion...'
     print motionTemplate e.accelerationIncludingGravity
 
 $().bind('devicemotion', onMotion)
+window.alert 'Starting'
