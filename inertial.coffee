@@ -42,7 +42,7 @@ yEl = $('#y')
 zEl = $('#z')
 onMotion = (e) ->
     a = e.acceleration
-    if a.x < A_THRESH and a.y < A_THRESH
+    if Math.abs(a.x) < A_THRESH and Math.abs(a.y) < A_THRESH
         return
 
     dt = e.interval

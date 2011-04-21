@@ -46,7 +46,7 @@
   onMotion = function(e) {
     var a, dt;
     a = e.acceleration;
-    if (a.x < A_THRESH && a.y < A_THRESH) {
+    if (Math.abs(a.x) < A_THRESH && Math.abs(a.y) < A_THRESH) {
       return;
     }
     dt = e.interval;
