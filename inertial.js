@@ -31,11 +31,10 @@
   positionTemplate = _.template('x: <%= x %>, y: <%= y %>, z: <%= z %>');
   onMotion = function(e) {
     var a, dt, ti;
-    print('Got motion!');
     if (motions % MOTION_REPORT_INTERVAL === 0) {
       report(e.acceleration);
     }
-    motions++;
+    motions += 1;
     motions %= MOTION_REPORT_INTERVAL;
     dt = Date.now() - t;
     t += dt;

@@ -28,10 +28,9 @@ report = -> print positionTemplate
 
 positionTemplate = _.template 'x: <%= x %>, y: <%= y %>, z: <%= z %>'
 onMotion = (e) ->
-    print 'Got motion!'
     if motions % MOTION_REPORT_INTERVAL is 0
         report e.acceleration
-    motions++
+    motions += 1
     motions %= MOTION_REPORT_INTERVAL
 
     dt = Date.now() - t
