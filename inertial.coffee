@@ -19,7 +19,7 @@ tLastMotionEvent = null
 body = $('body')
 printTemplate = _.template '<div><span><%= s %></span></div>'
 print = (s) ->
-    body.append printTemplate s: s
+    body.prepend printTemplate s: s
 
 positionTemplate = _.template 'x: <%= x %>, y: <%= y %>, z: <%= z %>'
 report = -> print positionTemplate
@@ -35,15 +35,15 @@ reportTimeout = ->
 onMotion = (e) ->
     a = e.acceleration
 
-    ti = e.interval / 1000
+    dt = e.interval #/ 1000
 
-    v.x += a.x * ti
-    v.y += a.y * ti
-    v.z += a.z * ti
+    v.x += a.x * dt
+    v.y += a.y * dt
+    v.z += a.z * dt
 
-    x += v.x * ti
-    y += v.y * ti
-    z += v.z * ti
+    x += v.x * dt
+    y += v.y * dt
+    z += v.z * dt
 
     if not h?
         h = setTimeout reportTimeout, 500
