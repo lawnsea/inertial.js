@@ -15,7 +15,9 @@
   };
   motionTemplate = _.template('agx: <%= x %>, agy: <%= y %>, agz: <%= z %>');
   onMotion = function(e) {
+    window.alert('Got motion...');
     return print(motionTemplate(e.accelerationIncludingGravity));
   };
   $().bind('devicemotion', onMotion);
+  window.alert('Starting');
 }).call(this);
