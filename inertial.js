@@ -1,5 +1,5 @@
 (function() {
-  var A_THRESH, INCHES_PER_METER, axEl, ayEl, azEl, body, h, log, onMotion, positionTemplate, print, printTemplate, r, report, reportTimeout, tLastMotionEvent, v, vxEl, vyEl, vzEl, x, xEl, y, yEl, z, zEl;
+  var A_THRESH, INCHES_PER_MM, axEl, ayEl, azEl, body, h, log, onMotion, positionTemplate, print, printTemplate, r, report, reportTimeout, tLastMotionEvent, v, vxEl, vyEl, vzEl, x, xEl, y, yEl, z, zEl;
   x = 0;
   y = 0;
   z = 0;
@@ -10,8 +10,8 @@
     z: 0
   };
   h = null;
-  A_THRESH = 1;
-  INCHES_PER_METER = 39.3700787;
+  A_THRESH = 1 / 1000;
+  INCHES_PER_MM = 39.3700787 / 1000;
   tLastMotionEvent = null;
   body = $('body');
   printTemplate = _.template('<div><span><%= s %></span></div>');
@@ -24,9 +24,9 @@
   positionTemplate = _.template('x: <%= x %>, y: <%= y %>, z: <%= z %>');
   report = function() {
     return print(positionTemplate({
-      x: (x * INCHES_PER_METER).toFixed(2),
-      y: (y * INCHES_PER_METER).toFixed(2),
-      z: (z * INCHES_PER_METER).toFixed(2)
+      x: (x * INCHES_PER_MM).toFixed(2),
+      y: (y * INCHES_PER_MM).toFixed(2),
+      z: (z * INCHES_PER_MM).toFixed(2)
     }));
   };
   reportTimeout = function() {
@@ -44,30 +44,30 @@
   yEl = $('#y');
   zEl = $('#z');
   onMotion = function(e) {
-    var a, dt;
+    var a, ax, ay, az, dt;
     a = e.acceleration;
-    if (Math.abs(a.x) < A_THRESH && Math.abs(a.y) < A_THRESH) {
+    dt = e.interval;
+    ax = a.x / 1000;
+    ay = a.y / 1000;
+    az = a.z / 1000;
+    if (Math.abs(ax) < A_THRESH && Math.abs(ay) < A_THRESH) {
       return;
     }
-    dt = e.interval;
-    v.x += (a.x * dt) / 1000;
-    v.y += (a.y * dt) / 1000;
-    v.z += (a.z * dt) / 1000;
+    v.x += ax * dt;
+    v.y += ay * dt;
+    v.z += az * dt;
     x += v.x * dt;
     y += v.y * dt;
     z += v.z * dt;
-    axEl.html(a.x);
-    ayEl.html(a.y);
-    azEl.html(a.z);
+    aEl.html(ax);
+    aEl.html(ay);
+    aEl.html(az);
     vxEl.html(v.x);
     vyEl.html(v.y);
     vzEl.html(v.z);
-    xEl.html(x);
-    yEl.html(y);
-    zEl.html(z);
-    if (!(h != null)) {
-      return h = setTimeout(reportTimeout, 500);
-    }
+    xEl.html(x.toFixed(3));
+    yEl.html(y.toFixed(3));
+    return zEl.html(z.toFixed(3));
   };
   window.addEventListener('devicemotion', onMotion, false);
 }).call(this);
