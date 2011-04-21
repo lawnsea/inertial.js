@@ -24,9 +24,9 @@
   };
   report = function() {
     return print(positionTemplate({
-      x: x * INCHES_PER_METER,
-      y: y * INCHES_PER_METER,
-      z: z * INCHES_PER_METER
+      x: (x * INCHES_PER_METER).toFixed(2),
+      y: (y * INCHES_PER_METER).toFixed(2),
+      z: (z * INCHES_PER_METER).toFixed(2)
     }));
   };
   reportTimeout = function() {
@@ -50,7 +50,7 @@
     if (h != null) {
       clearTimeout(h);
     }
-    return h = setTimeout(reportTimeout, 10);
+    return h = setTimeout(reportTimeout, 500);
   };
   window.addEventListener('devicemotion', onMotion, false);
 }).call(this);
