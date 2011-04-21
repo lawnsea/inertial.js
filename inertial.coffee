@@ -7,7 +7,6 @@ v =
     y: 0
     z: 0
 
-t = Date.now()
 h = null
 
 motions = 0
@@ -22,6 +21,7 @@ printTemplate = _.template '<div><span><%= s %></span></div>'
 print = (s) ->
     body.append printTemplate s: s
 
+positionTemplate = _.template 'x: <%= x %>, y: <%= y %>, z: <%= z %>'
 report = -> print positionTemplate
         x: (x * INCHES_PER_METER).toFixed(2)
         y: (y * INCHES_PER_METER).toFixed(2)
@@ -32,23 +32,18 @@ reportTimeout = ->
     report()
     h = null
 
-positionTemplate = _.template 'x: <%= x %>, y: <%= y %>, z: <%= z %>'
 onMotion = (e) ->
     a = e.acceleration
 
-    dt = Date.now() - t
-    t += dt
-    dt /= 1000
     ti = e.interval / 1000
 
     v.x += a.x * ti
     v.y += a.y * ti
     v.z += a.z * ti
 
-    # XXX: this is wrong. weight previous and current v by dt - ti and ti, respectively
-    x += v.x * dt
-    y += v.y * dt
-    z += v.z * dt
+    x += v.x * ti
+    y += v.y * ti
+    z += v.z * ti
 
     if not h?
         h = setTimeout reportTimeout, 500

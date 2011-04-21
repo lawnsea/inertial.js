@@ -1,5 +1,5 @@
 (function() {
-  var INCHES_PER_METER, MOTION_REPORT_INTERVAL, body, h, motions, onMotion, positionTemplate, print, printTemplate, r, report, reportTimeout, t, tLastMotionEvent, v, x, y, z;
+  var INCHES_PER_METER, MOTION_REPORT_INTERVAL, body, h, motions, onMotion, positionTemplate, print, printTemplate, r, report, reportTimeout, tLastMotionEvent, v, x, y, z;
   x = 0;
   y = 0;
   z = 0;
@@ -9,7 +9,6 @@
     y: 0,
     z: 0
   };
-  t = Date.now();
   h = null;
   motions = 0;
   MOTION_REPORT_INTERVAL = 10;
@@ -22,6 +21,7 @@
       s: s
     }));
   };
+  positionTemplate = _.template('x: <%= x %>, y: <%= y %>, z: <%= z %>');
   report = function() {
     return print(positionTemplate({
       x: (x * INCHES_PER_METER).toFixed(2),
@@ -34,20 +34,16 @@
     report();
     return h = null;
   };
-  positionTemplate = _.template('x: <%= x %>, y: <%= y %>, z: <%= z %>');
   onMotion = function(e) {
-    var a, dt, ti;
+    var a, ti;
     a = e.acceleration;
-    dt = Date.now() - t;
-    t += dt;
-    dt /= 1000;
     ti = e.interval / 1000;
     v.x += a.x * ti;
     v.y += a.y * ti;
     v.z += a.z * ti;
-    x += v.x * dt;
-    y += v.y * dt;
-    z += v.z * dt;
+    x += v.x * ti;
+    y += v.y * ti;
+    z += v.z * ti;
     if (!(h != null)) {
       return h = setTimeout(reportTimeout, 500);
     }
